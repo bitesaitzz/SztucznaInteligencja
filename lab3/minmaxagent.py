@@ -27,19 +27,19 @@ class MinMaxAgent:
 
 
     def decide(self, connect4: Connect4) -> int:
-
-        action = self.minmax(connect4, self.max_depth, self.my_token)
-
-        return action
-
-
-    def minmax(self, connect4: Connect4, depth, player) -> int:
-        if depth == 0 or connect4.game_over:
+        if self.max_depth == 0 or connect4.game_over:
             return
-        if connect4.who_moves == player:
-            return self.max_value(connect4, depth, player)[1]
-        else:
-            return self.min_value(connect4, depth, player)[1]
+        # action = self.minmax(connect4, self.max_depth, self.my_token)
+        return self.max_value(connect4, self.max_depth, self.my_token)[1]
+
+
+    # def minmax(self, connect4: Connect4, depth, player) -> int:
+    #     if depth == 0 or connect4.game_over:
+    #         return
+    #     if connect4.who_moves == player:
+    #         return self.max_value(connect4, depth, player)[1]
+    #     else:
+    #         return self.min_value(connect4, depth, player)[1]
 
     def max_value(self,connect4: Connect4, depth, player) -> tuple[float, int]:
         if depth == 0 or connect4.game_over:

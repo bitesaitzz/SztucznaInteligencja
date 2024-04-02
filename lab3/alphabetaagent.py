@@ -23,19 +23,20 @@ class AlphaBetaAgent:
 
 
     def decide(self, connect4) -> int:
-
-        action = self.alphabeta(connect4, self.max_depth, self.my_token)
-
-        return action
-
-
-    def alphabeta(self, connect4, depth, player) -> int:
-        if depth == 0 or connect4.game_over:
+        if self.max_depth == 0 or connect4.game_over:
             return
-        if connect4.who_moves == player:
-            return self.alpha_value(connect4, depth, player, alpha=-10000, beta=10000)[1]
-        else:
-            return self.beta_value(connect4, depth, player,alpha=-10000, beta=10000)[1]
+        # action = self.alphabeta(connect4, self.max_depth, self.my_token)
+
+        return self.alpha_value(connect4, self.max_depth, self.my_token, alpha=-10000, beta=10000)[1]
+
+
+    # def alphabeta(self, connect4, depth, player) -> int:
+    #     if depth == 0 or connect4.game_over:
+    #         return
+    #     if connect4.who_moves == player:
+    #         return self.alpha_value(connect4, depth, player, alpha=-10000, beta=10000)[1]
+    #     else:
+    #         return self.beta_value(connect4, depth, player,alpha=-10000, beta=10000)[1]
 
     def alpha_value(self,connect4, depth, player, alpha, beta):
         if depth == 0 or connect4.game_over:
@@ -71,10 +72,6 @@ class AlphaBetaAgent:
             beta = min(beta, value)
             if alpha >= beta:
                 break
-
-
-
-
         return best_value, best_action
 
 
