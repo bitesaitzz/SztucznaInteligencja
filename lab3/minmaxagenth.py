@@ -1,74 +1,10 @@
-# from copy import deepcopy
-#
-# from connect4 import Connect4
-# from exceptions import AgentException
-#
-#
-# class MinMaxAgent:
-#
-#
-#
-#     def result(self, connect4, player):
-#         opponent = 'o' if player == 'x' else 'x'
-#         if connect4.wins == player:
-#             return 1
-#         elif connect4.wins != player:
-#             return -1
-#         else:
-#             return 0
-#     def __init__(self, my_token ,max_depth=4):
-#         self.my_token = my_token
-#         self.max_depth = max_depth
-#
-#     def decide(self, connect4: Connect4) -> int:
-#         if self.max_depth == 0 or connect4.game_over:
-#             return
-#         return self.max_value(connect4, self.max_depth, self.my_token)[1]
-#
-#     def max_value(self,connect4: Connect4, depth, player) -> tuple[float, int]:
-#         if depth == 0:
-#             return 0, None
-#         if connect4.game_over == True:
-#             return self.result(connect4, player), None
-#         best_value = -1000000
-#         best_action = None
-#
-#         for action in connect4.possible_drops():
-#             next_state = deepcopy(connect4)
-#             next_state.drop_token(action)
-#             value = self.min_value(next_state, depth-1, player)[0]
-#             if (value > best_value):
-#                 best_value = value
-#                 best_action = action
-#
-#         return best_value, best_action
-#
-#     def min_value(self, connect4, depth, player) -> tuple[float, int]:
-#         if depth == 0:
-#             return 0, None
-#         if connect4.game_over == True:
-#             return self.result(connect4, player), None
-#         best_value = 100000
-#         best_action = None
-#         for action in connect4.possible_drops():
-#             next_state = deepcopy(connect4)
-#             next_state.drop_token(action)
-#             value = self.max_value(next_state, depth-1, player)[0]
-#             if (value < best_value):
-#                 best_value = value
-#                 best_action = action
-#
-#         return best_value, best_action
-#
-#
-import random
 from copy import deepcopy
 
 from connect4 import Connect4
 from exceptions import AgentException
 
 
-class MinMaxAgent:
+class MinMaxAgentH:
 
     def static(self, connect4, player):
         wynik = 0
@@ -125,16 +61,14 @@ class MinMaxAgent:
 
     def max_value(self,connect4: Connect4, depth, player) -> tuple[float, int]:
         if depth == 0:
-            return 0, None
+            return self.static(connect4, player), None
         if connect4.game_over == True:
             return self.result(connect4, player), None
             #return self.static(connect4, player), None
         best_value = -1000000
         best_action = None
 
-        possible_drops = connect4.possible_drops()
-        random.shuffle(possible_drops)
-        for action in possible_drops:
+        for action in connect4.possible_drops():
             next_state = deepcopy(connect4)
             next_state.drop_token(action)
             value = self.min_value(next_state, depth-1, player)[0]
@@ -146,14 +80,12 @@ class MinMaxAgent:
 
     def min_value(self, connect4, depth, player) -> tuple[float, int]:
         if depth == 0:
-            return 0, None
+            return self.static(connect4, player), None
         if connect4.game_over == True:
             return self.result(connect4, player), None
         best_value = 100000
         best_action = None
-        possible_drops = connect4.possible_drops()
-        random.shuffle(possible_drops)
-        for action in possible_drops:
+        for action in connect4.possible_drops():
             next_state = deepcopy(connect4)
             next_state.drop_token(action)
             value = self.max_value(next_state, depth-1, player)[0]
