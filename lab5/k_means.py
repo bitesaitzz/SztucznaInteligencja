@@ -41,6 +41,7 @@ def update_centroids(data, assignments):
         centroid = np.mean(cluster_data, axis=0)
         centroids[i] = centroid
     return centroids
+
 def mean_intra_distance(data, assignments, centroids):
     return np.sqrt(np.sum((data - centroids[assignments, :])**2))
 
